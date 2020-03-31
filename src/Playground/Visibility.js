@@ -1,24 +1,40 @@
-const appRoot = document.getElementById('app')
-let visible = false
+class Visibility extends React.Component {
 
-const show = () =>{
-    visible = !visible
-    Built_Visibility()
-}
+    constructor(props) {
+        super(props);
+        this.show = this.show.bind(this);
 
-const Built_Visibility = () => {
-    const template = (
-        <div>
-            <h1>Visibility Toggle</h1>
-            <button onClick={show}>
-                {visible?'Show Details':'Hide Details'}
-            </button>
-            {
-            (visible)&& (<p>Here is some Text</p>)                
-            }
-        </div>
-    )
-    ReactDOM.render(template,appRoot)
-}
+        this.state = {
+            visible: false
+        }
+    }
 
-Built_Visibility()
+    show(){
+        this.setState((prevState) => {
+            return{
+                visible : !prevState.visible
+            };
+        });
+    }
+
+    render(){
+        return (
+            <div>
+                <h1>Visibility Toggle</h1>
+                <button onClick={this.show}>
+                    {this.state.visible?'Hide Details':'Show Details'}
+                </button>
+                {
+                    (this.state.visible) && 
+                    (
+                        <div>
+                        <p>You Can't See Me</p>
+                        </div>
+                    )                
+                }
+            </div>    
+        );
+    };
+};
+
+ReactDOM.render(<Visibility />,document.getElementById('app'));
